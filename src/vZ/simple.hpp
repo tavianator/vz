@@ -29,12 +29,13 @@ namespace vZ
   template <typename T>
   class GenericSimpleIntegrator : public GenericIntegrator<T>
   {
-  public:
-    typedef typename GenericIntegrator<T>::Function Function;
-
+  protected:
     // Coefficients in the tableau representation of the RK algorithm
     typedef std::vector<std::vector<T> > ACoefficients;
     typedef std::vector<T>               BCoefficients;
+
+  public:
+    typedef typename GenericIntegrator<T>::Function Function;
 
     GenericSimpleIntegrator(Function f, T dt,
                             ACoefficients a, BCoefficients b)
