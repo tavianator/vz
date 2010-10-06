@@ -26,23 +26,23 @@
 namespace vZ
 {
   // Base class for non-adaptive RK-style algorithms
-  template <typename Real>
-  class GenericSimpleIntegrator : public GenericIntegrator<Real>
+  template <typename T>
+  class GenericSimpleIntegrator : public GenericIntegrator<T>
   {
   public:
-    typedef typename GenericIntegrator<Real>::Function Function;
+    typedef typename GenericIntegrator<T>::Function Function;
 
     // Coefficients in the tableau representation of the RK algorithm
-    typedef std::vector<std::vector<Real> > ACoefficients;
-    typedef std::vector<Real>               BCoefficients;
+    typedef std::vector<std::vector<T> > ACoefficients;
+    typedef std::vector<T>               BCoefficients;
 
-    GenericSimpleIntegrator(Function f, Real dt,
+    GenericSimpleIntegrator(Function f, T dt,
                             ACoefficients a, BCoefficients b)
-      : GenericIntegrator<Real>(f, dt), m_a(a), m_b(b) { }
+      : GenericIntegrator<T>(f, dt), m_a(a), m_b(b) { }
     virtual ~GenericSimpleIntegrator() { }
 
   protected:
-    virtual void step(Real& t, Real& dt);
+    virtual void step(T& t, T& dt);
 
   private:
     ACoefficients m_a;

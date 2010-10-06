@@ -32,35 +32,35 @@ namespace vZ
   // If the initial value problem is specified as
   //   y' = f(t, y); y(t0) = y0
   // then an Integrator could be constructed as Integrator(f, dt).y(y0).t(t0)
-  template <typename Real>
+  template <typename T>
   class GenericIntegrator
   {
   public:
-    typedef std::tr1::function<Real (Real, Real)> Function;
+    typedef std::tr1::function<T (T, T)> Function;
 
     // By default, y and t start at zero
-    GenericIntegrator(Function f, Real dt)
+    GenericIntegrator(Function f, T dt)
       : m_f(f), m_y(0), m_t(0), m_dt(dt) { }
     virtual ~GenericIntegrator() { }
 
-    GenericIntegrator& y(Real y)   { m_y  = y;  return *this; }
-    GenericIntegrator& t(Real t)   { m_t  = t;  return *this; }
-    GenericIntegrator& dt(Real dt) { m_dt = dt; return *this; }
+    GenericIntegrator& y(T y)   { m_y  = y;  return *this; }
+    GenericIntegrator& t(T t)   { m_t  = t;  return *this; }
+    GenericIntegrator& dt(T dt) { m_dt = dt; return *this; }
 
-    Real y()  const { return m_y; }
-    Real t()  const { return m_t; }
-    Real dt() const { return m_dt; }
+    T y()  const { return m_y; }
+    T t()  const { return m_t; }
+    T dt() const { return m_dt; }
 
     // Integrate until time t
-    void integrate(Real t_final);
+    void integrate(T t_final);
 
   protected:
-    virtual void step(Real& t, Real& dt) = 0;
+    virtual void step(T& t, T& dt) = 0;
     Function m_f;
 
   private:
-    Real m_y;
-    Real m_t, m_dt;
+    T m_y;
+    T m_t, m_dt;
   };
 
   // Type alias
@@ -68,9 +68,9 @@ namespace vZ
 
   // Definitions
 
-  template <typename Real>
+  template <typename T>
   void
-  GenericIntegrator<Real>::integrate(Real t_final)
+  GenericIntegrator<T>::integrate(T t_final)
   {
     while (m_t < t_final) {
       m_dt = std::min(m_dt, t_final - m_t);
