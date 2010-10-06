@@ -1,16 +1,16 @@
 /*************************************************************************
  * Copyright (C) 2009-2010 Tavian Barnes <tavianator@gmail.com>          *
  *                                                                       *
- * This file is part of The Dimension Library.                           *
+ * This file is part of The vZ Library.                                  *
  *                                                                       *
- * The Dimension Library is free software; you can redistribute it and/  *
- * or modify it under the terms of the GNU Lesser General Public License *
- * as published by the Free Software Foundation; either version 3 of the *
+ * The vZ Library is free software; you can redistribute it and/or       *
+ * modify it under the terms of the GNU Lesser General Public License as *
+ * published by the Free Software Foundation; either version 3 of the    *
  * License, or (at your option) any later version.                       *
  *                                                                       *
- * The Dimension Library is distributed in the hope that it will be      *
- * useful, but WITHOUT ANY WARRANTY; without even the implied warranty   *
- * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  *
+ * The vZ Library is distributed in the hope that it will be useful, but *
+ * WITHOUT ANY WARRANTY; without even the implied warranty of            *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU     *
  * Lesser General Public License for more details.                       *
  *                                                                       *
  * You should have received a copy of the GNU Lesser General Public      *
@@ -18,13 +18,21 @@
  * <http://www.gnu.org/licenses/>.                                       *
  *************************************************************************/
 
-// vZ -- A Runge-Kutta type numerical integration library
+#ifndef VZ_TRAITS_HPP
+#define VZ_TRAITS_HPP
 
-#ifndef VZ_HPP
-#define VZ_HPP
+namespace vZ
+{
+  // Traits class
+  //
+  // Specialize this class for non-scalar types which are used as template
+  // arguments to the Generic* classes
+  template <typename T>
+  class Traits
+  {
+  public:
+    typedef T Scalar;
+  };
+}
 
-#include <vZ/traits.hpp>
-#include <vZ/integrator.hpp>
-#include <vZ/simple.hpp>
-
-#endif // VZ_HPP
+#endif // VZ_TRAITS_HPP
