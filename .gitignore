@@ -14,6 +14,10 @@
 Makefile
 Makefile.in
 
+# Files created by `make check'
+/tests/*-test
+/tests/*.log
+
 # pkg-config files
 *.pc
 
