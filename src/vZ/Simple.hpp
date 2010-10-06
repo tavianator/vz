@@ -26,22 +26,23 @@
 namespace vZ
 {
   // Base class for non-adaptive RK-style algorithms
-  template <typename T>
-  class GenericSimpleIntegrator : public GenericRKIntegrator<T>
+  template <typename Y>
+  class GenericSimpleIntegrator : public GenericRKIntegrator<Y>
   {
   public:
-    typedef typename GenericIntegrator<T>::Function Function;
+    typedef typename GenericRKIntegrator<Y>::Scalar   Scalar;
+    typedef typename GenericRKIntegrator<Y>::Function Function;
 
   protected:
-    typedef typename GenericRKIntegrator<T>::ACoefficients ACoefficients;
-    typedef typename GenericRKIntegrator<T>::BCoefficients BCoefficients;
+    typedef typename GenericRKIntegrator<Y>::ACoefficients ACoefficients;
+    typedef typename GenericRKIntegrator<Y>::BCoefficients BCoefficients;
+    typedef typename GenericRKIntegrator<Y>::KVector       KVector;
 
-    GenericSimpleIntegrator(Function f, T dt,
-                            ACoefficients a, BCoefficients b)
-      : GenericIntegrator<T>(f, dt), m_a(a), m_b(b) { }
+    GenericSimpleIntegrator(Function f, ACoefficients a, BCoefficients b)
+      : GenericRKIntegrator<Y>(f), m_a(a), m_b(b) { }
     virtual ~GenericSimpleIntegrator() { }
 
-    virtual void step(T& t, T& dt);
+    void step();
 
   private:
     ACoefficients m_a;
@@ -53,10 +54,12 @@ namespace vZ
 
   // Implementations
 
-  template <typename T>
+  template <typename Y>
   void
-  GenericSimpleIntegrator<T>::step(T& t, T& dt)
+  GenericSimpleIntegrator<Y>::step()
   {
+    this->y(calculateY(calculateK(m_a), m_b));
+    this->x(this->x() + this->h());
   }
 }
 

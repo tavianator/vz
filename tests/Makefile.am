@@ -19,7 +19,7 @@
 
 INCLUDES = -I$(top_srcdir)/src
 
-check_PROGRAMS = compile-test
+check_PROGRAMS = Euler-test
 TESTS          = $(check_PROGRAMS)
 
-compile_test_SOURCES = compile.cpp
+Euler_test_SOURCES = Euler.cpp

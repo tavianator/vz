@@ -18,69 +18,61 @@
  * <http://www.gnu.org/licenses/>.                                       *
  *************************************************************************/
 
-#ifndef VZ_INTEGRATOR_HPP
-#define VZ_INTEGRATOR_HPP
-
-#include <tr1/functional>
-#include <algorithm>
+#ifndef VZ_EULER_HPP
+#define VZ_EULER_HPP
 
 namespace vZ
 {
-  // Base Integrator class
+  // Euler method
   //
-  // All integration methods derrive from this class
-  // If the initial value problem is specified as
-  //   y' = f(x, y); y(x0) = y0
-  // then an Integrator could be constructed as Integrator(f, dt).y(y0).x(x0)
+  // Simplest Runge-Kutta method
+  // First order
+  // Its tableau is:
+  //
+  //   0|
+  //   -+-
+  //    |1
+  //
+  // y[n + 1] = y[n] + dt*f(y[n])
   template <typename Y>
-  class GenericIntegrator
+  class GenericEulerIntegrator : public GenericSimpleIntegrator<Y>
   {
   public:
-    typedef typename Traits<Y>::Scalar Scalar;
-    typedef std::tr1::function<Y (Scalar, Y)> Function;
+    typedef typename GenericSimpleIntegrator<Y>::Scalar   Scalar;
+    typedef typename GenericSimpleIntegrator<Y>::Function Function;
 
-    // By default, y and t start at zero, h starts UNDEFINED
-    GenericIntegrator(Function f)
-      : m_f(f), m_y(0), m_x(0), m_h() { }
-    virtual ~GenericIntegrator() { }
-
-    GenericIntegrator& y(Y y)      { m_y = y; return *this; }
-    GenericIntegrator& x(Scalar x) { m_x = x; return *this; }
-    GenericIntegrator& h(Scalar h) { m_h = h; return *this; }
-
-    Y      y() const { return m_y; }
-    Scalar x() const { return m_x; }
-    Scalar h() const { return m_h; }
-
-    // Integrate until x == x_final
-    void integrate(Scalar x_final);
-
-  protected:
-    virtual void step() = 0;
-
-    const Function& f() const { return m_f; }
+    GenericEulerIntegrator(Function f)
+      : GenericSimpleIntegrator<Y>(f, s_a, s_b) { }
+    ~GenericEulerIntegrator() { }
 
   private:
-    Function m_f;
-    Y m_y;
-    Scalar m_x, m_h;
+    typedef typename GenericSimpleIntegrator<Y>::ACoefficients ACoefficients;
+    typedef typename GenericSimpleIntegrator<Y>::BCoefficients BCoefficients;
+
+    static ACoefficients s_a;
+    static BCoefficients s_b;
+
+    static Scalar s_bArr[1];
   };
 
   // Type alias
-  typedef GenericIntegrator<double> Integrator;
+  typedef GenericEulerIntegrator<double> EulerIntegrator;
 
-  // Implementations
+  // Implementation
 
   template <typename Y>
-  void
-  GenericIntegrator<Y>::integrate(Scalar x_final)
-  {
-    while (m_x < x_final) {
-      m_h = std::min(m_h, x_final - m_x);
-      step();
-    }
-  }
+  typename GenericEulerIntegrator<Y>::Scalar
+  GenericEulerIntegrator<Y>::s_bArr[1] = {
+    Scalar(1)
+  };
+
+  template <typename Y>
+  typename GenericEulerIntegrator<Y>::ACoefficients
+  GenericEulerIntegrator<Y>::s_a;
+
+  template <typename Y>
+  typename GenericEulerIntegrator<Y>::BCoefficients
+  GenericEulerIntegrator<Y>::s_b(s_bArr, s_bArr + 1);
 }
 
-
-#endif // VZ_INTEGRATOR_HPP
+#endif // VZ_EULER_HPP

@@ -27,5 +27,6 @@
 #include <vZ/Integrator.hpp>
 #include <vZ/RK.hpp>
 #include <vZ/Simple.hpp>
+#include <vZ/Euler.hpp>
 
 #endif // VZ_HPP
