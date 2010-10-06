@@ -29,5 +29,6 @@
 #include <vZ/Simple.hpp>
 #include <vZ/Euler.hpp>
 #include <vZ/Midpoint.hpp>
+#include <vZ/RK4.hpp>
 
 #endif // VZ_HPP

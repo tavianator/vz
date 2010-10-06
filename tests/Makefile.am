@@ -20,8 +20,10 @@
 INCLUDES = -I$(top_srcdir)/src
 
 check_PROGRAMS = Euler-test                                                    \
-                 Midpoint-test
+                 Midpoint-test                                                 \
+                 RK4-test
 TESTS          = $(check_PROGRAMS)
 
 Euler_test_SOURCES    = Euler.cpp
 Midpoint_test_SOURCES = Midpoint.cpp
+RK4_test_SOURCES      = RK4.cpp

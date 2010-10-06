@@ -69,7 +69,7 @@ namespace vZ
          i != a.end();
          ++i)
     {
-      Scalar c = 0;
+      Scalar c(0);
       Y y = this->y();
       for (typename std::vector<Scalar>::size_type j = 0; j < i->size(); ++j) {
         Scalar aij = i->at(j);

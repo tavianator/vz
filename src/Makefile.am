@@ -22,5 +22,6 @@ nobase_include_HEADERS = vZ.hpp                                                \
                          vZ/Integrator.hpp                                     \
                          vZ/Midpoint.hpp                                       \
                          vZ/RK.hpp                                             \
+                         vZ/RK4.hpp                                            \
                          vZ/Simple.hpp                                         \
                          vZ/Traits.hpp
