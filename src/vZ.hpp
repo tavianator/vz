@@ -23,8 +23,8 @@
 #ifndef VZ_HPP
 #define VZ_HPP
 
-#include <vZ/traits.hpp>
-#include <vZ/integrator.hpp>
-#include <vZ/simple.hpp>
+#include <vZ/Traits.hpp>
+#include <vZ/Integrator.hpp>
+#include <vZ/Simple.hpp>
 
 #endif // VZ_HPP

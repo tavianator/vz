@@ -18,6 +18,6 @@
 ###########################################################################
 
 nobase_include_HEADERS = vZ.hpp                                                \
-                         vZ/integrator.hpp                                     \
-                         vZ/traits.hpp                                         \
-                         vZ/simple.hpp
+                         vZ/Integrator.hpp                                     \
+                         vZ/Traits.hpp                                         \
+                         vZ/Simple.hpp
