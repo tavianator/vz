@@ -25,6 +25,7 @@
 
 #include <vZ/Traits.hpp>
 #include <vZ/Integrator.hpp>
+#include <vZ/RK.hpp>
 #include <vZ/Simple.hpp>
 
 #endif // VZ_HPP

@@ -18,46 +18,31 @@
  * <http://www.gnu.org/licenses/>.                                       *
  *************************************************************************/
 
-#ifndef VZ_SIMPLE_HPP
-#define VZ_SIMPLE_HPP
+#ifndef VZ_RK_HPP
+#define VZ_RK_HPP
 
 #include <vector>
 
 namespace vZ
 {
-  // Base class for non-adaptive RK-style algorithms
+  // Base class for Runge-Kutta type algorithms
   template <typename T>
-  class GenericSimpleIntegrator : public GenericRKIntegrator<T>
+  class GenericRKIntegrator : public GenericIntegrator<T>
   {
   public:
     typedef typename GenericIntegrator<T>::Function Function;
 
   protected:
-    typedef typename GenericRKIntegrator<T>::ACoefficients ACoefficients;
-    typedef typename GenericRKIntegrator<T>::BCoefficients BCoefficients;
+    // Coefficients in the tableau representation of the RK algorithm
+    typedef std::vector<std::vector<T> > ACoefficients;
+    typedef std::vector<T>               BCoefficients;
 
-    GenericSimpleIntegrator(Function f, T dt,
-                            ACoefficients a, BCoefficients b)
-      : GenericIntegrator<T>(f, dt), m_a(a), m_b(b) { }
-    virtual ~GenericSimpleIntegrator() { }
-
-    virtual void step(T& t, T& dt);
-
-  private:
-    ACoefficients m_a;
-    BCoefficients m_b;
+    GenericRKIntegrator(Function f, T dt) : GenericIntegrator<T>(f, dt) { }
+    virtual ~GenericRKIntegrator() { }
   };
 
   // Type alias
-  typedef GenericSimpleIntegrator<double> SimpleIntegrator;
-
-  // Implementations
-
-  template <typename T>
-  void
-  GenericSimpleIntegrator<T>::step(T& t, T& dt)
-  {
-  }
+  typedef GenericRKIntegrator<double> RKIntegrator;
 }
 
-#endif // VZ_SIMPLE_HPP
+#endif // VZ_RK_HPP

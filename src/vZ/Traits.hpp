@@ -32,6 +32,9 @@ namespace vZ
   {
   public:
     typedef T Scalar;
+
+  private:
+    Traits();
   };
 }
 

@@ -66,7 +66,7 @@ namespace vZ
   // Type alias
   typedef GenericIntegrator<double> Integrator;
 
-  // Definitions
+  // Implementations
 
   template <typename T>
   void
