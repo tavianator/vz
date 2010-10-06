@@ -28,7 +28,7 @@ namespace vZ
 {
   // Base Integrator class
   //
-  // All integration methods derrive from this class
+  // All integration methods derive from this class
   // If the initial value problem is specified as
   //   y' = f(x, y); y(x0) = y0
   // then an Integrator could be constructed as Integrator(f, dt).y(y0).x(x0)
