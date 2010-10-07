@@ -26,6 +26,7 @@ main()
             << "Numerical:  " << actual << std::endl
             << "Expected:   " << expected  << std::endl
             << "h:          " << integrator.h() << std::endl
+            << "iterations: " << integrator.iterations() << std::endl
             << "rejections: " << integrator.rejections() << std::endl;
 
   double error = std::fabs(expected - actual)/expected;

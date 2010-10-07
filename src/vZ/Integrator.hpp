@@ -41,7 +41,7 @@ namespace vZ
 
     // By default, y and t start at zero, h starts UNDEFINED
     GenericIntegrator(Function f)
-      : m_f(f), m_y(0), m_x(0), m_h() { }
+      : m_f(f), m_y(0), m_x(0), m_iterations(0) { }
     virtual ~GenericIntegrator() { }
 
     GenericIntegrator& y(Y y)      { m_y = y; return *this; }
@@ -51,6 +51,8 @@ namespace vZ
     Y      y() const { return m_y; }
     Scalar x() const { return m_x; }
     Scalar h() const { return m_h; }
+
+    unsigned int iterations() const { return m_iterations; }
 
     // Integrate until x == x_final
     void integrate(Scalar x_final);
@@ -64,6 +66,7 @@ namespace vZ
     Function m_f;
     Y m_y;
     Scalar m_x, m_h;
+    unsigned int m_iterations;
   };
 
   // Type alias
@@ -78,6 +81,7 @@ namespace vZ
     while (m_x < x_final) {
       m_h = std::min(m_h, x_final - m_x);
       step();
+      ++m_iterations;
     }
   }
 }

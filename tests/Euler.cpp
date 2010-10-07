@@ -23,15 +23,16 @@ main()
   double expected = std::exp(2.0);
 
   std::cout << std::setprecision(10)
-            << "Numerical: " << actual << std::endl
-            << "Expected:  " << expected  << std::endl;
+            << "Numerical:  " << actual << std::endl
+            << "Expected:   " << expected  << std::endl
+            << "iterations: " << integrator.iterations() << std::endl;
 
   double error = std::fabs(expected - actual)/expected;
   if (error > 0.01) {
-    std::cerr << "Error:     " << 100.0*error << "%" << std::endl;
+    std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {
-    std::cout << "Error:     " << 100.0*error << "%" << std::endl;
+    std::cout << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_SUCCESS;
   }
 }
