@@ -25,7 +25,8 @@ check_PROGRAMS = Euler-test                                                    \
                  RK4-test                                                      \
                  HE12-test                                                     \
                  BS23-test                                                     \
-                 RKF45-test
+                 RKF45-test                                                    \
+                 CK45-test
 TESTS          = $(check_PROGRAMS)
 
 Euler_test_SOURCES    = Euler.cpp
@@ -35,3 +36,4 @@ RK4_test_SOURCES      = RK4.cpp
 HE12_test_SOURCES     = HE12.cpp
 BS23_test_SOURCES     = BS23.cpp
 RKF45_test_SOURCES    = RKF45.cpp
+CK45_test_SOURCES     = CK45.cpp

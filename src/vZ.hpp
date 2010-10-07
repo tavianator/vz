@@ -35,5 +35,6 @@
 #include <vZ/HE12.hpp>
 #include <vZ/BS23.hpp>
 #include <vZ/RKF45.hpp>
+#include <vZ/CK45.hpp>
 
 #endif // VZ_HPP
