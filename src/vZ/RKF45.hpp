@@ -45,7 +45,7 @@ namespace vZ
     typedef typename GenericAdaptiveIntegrator<Y>::Function Function;
 
     GenericRKF45Integrator(Function f)
-      : GenericAdaptiveIntegrator<Y>(f, 3, s_a, s_b, s_bStar) { }
+      : GenericAdaptiveIntegrator<Y>(f, 5, s_a, s_b, s_bStar) { }
     ~GenericRKF45Integrator() { }
 
   private:

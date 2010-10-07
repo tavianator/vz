@@ -30,7 +30,7 @@ main()
             << "Rejections: " << integrator.rejections() << std::endl;
 
   double error = std::fabs(expected - actual)/expected;
-  if (error > 1.5e-6) {
+  if (error > 1.7e-6) {
     std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {
