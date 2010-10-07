@@ -32,8 +32,6 @@ namespace vZ
   //   0 |
   //   --+--
   //     | 1
-  //
-  // y[n + 1] = y[n] + dt*f(y[n])
   template <typename Y>
   class GenericEulerIntegrator : public GenericSimpleIntegrator<Y>
   {

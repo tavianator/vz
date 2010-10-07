@@ -34,13 +34,7 @@ namespace vZ
   //   1/2 | 0   1/2
   //   1   | 0   0   1
   //   ----+----------------
-  //       | 1/6 1/3 1/3 1/6
-  //
-  //    k1    = dt*f(y[n])
-  //    k2    = dt*f(y[n] + (dt/2)*k1)
-  //    k3    = dt*f(y[n] + (dt/2)*k2)
-  //    k4    = dt*f(y[n] + dt*k3)
-  // y[n + 1] = y[n] + (k1 + 2*k2 + 2*k3 + k4)/6
+  //   b   | 1/6 1/3 1/3 1/6
   template <typename Y>
   class GenericRK4Integrator : public GenericSimpleIntegrator<Y>
   {

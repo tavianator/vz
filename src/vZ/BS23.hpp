@@ -23,20 +23,18 @@
 
 namespace vZ
 {
-  // Heun-Euler method
+  // Bogacki-Shampine method
   //
-  // Second-order with embedded first-order
+  // Third-order with embedded second-order
   // Its tableau is:
   //
-  //   0 |
-  //   1 | 1
-  //   --+---------
-  //     | 1/2  1/2
-  //     |  1    0
-  //
-  //    k1    = dt*f(y[n])
-  //    k2    = dt*f(y[n] + dt*k1)
-  // y[n + 1] = y[n] + 1/2*(k1 + k2)
+  //   0   |
+  //   1/2 | 1/2
+  //   3/4 | 0    3/4
+  //   1   | 2/9  1/3 4/9
+  //   ----+-----------------
+  //   b   | 2/9  1/3 4/9 0
+  //   b*  | 7/24 1/4 1/3 1/8
   template <typename Y>
   class GenericBS23Integrator : public GenericAdaptiveIntegrator<Y>
   {
