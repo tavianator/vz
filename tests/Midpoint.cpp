@@ -25,7 +25,7 @@ main()
   std::cout << std::setprecision(10)
             << "Numerical:  " << actual << std::endl
             << "Expected:   " << expected  << std::endl
-            << "iterations: " << integrator.iterations() << std::endl;
+            << "Iterations: " << integrator.iterations() << std::endl;
 
   double error = std::fabs(expected - actual)/expected;
   if (error > 1.4e-4) {
