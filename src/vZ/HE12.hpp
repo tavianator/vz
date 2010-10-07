@@ -18,78 +18,90 @@
  * <http://www.gnu.org/licenses/>.                                       *
  *************************************************************************/
 
-#ifndef VZ_HEUN_HPP
-#define VZ_HEUN_HPP
+#ifndef VZ_HE12_HPP
+#define VZ_HE12_HPP
 
 namespace vZ
 {
-  // Heun's method
+  // Heun-Euler method
   //
-  // Second order Runge-Kutta method
-  // Two function evaluations per step
+  // Second-order with embedded first-order
   // Its tableau is:
   //
   //   0 |
   //   1 | 1
   //   --+---------
-  //     | 1/2 1/2
+  //     | 1/2  1/2
+  //     |  1    0
   //
   //    k1    = dt*f(y[n])
   //    k2    = dt*f(y[n] + dt*k1)
   // y[n + 1] = y[n] + 1/2*(k1 + k2)
   template <typename Y>
-  class GenericHeunIntegrator : public GenericSimpleIntegrator<Y>
+  class GenericHE12Integrator : public GenericAdaptiveIntegrator<Y>
   {
   public:
-    typedef typename GenericSimpleIntegrator<Y>::Scalar   Scalar;
-    typedef typename GenericSimpleIntegrator<Y>::Function Function;
+    typedef typename GenericAdaptiveIntegrator<Y>::Scalar   Scalar;
+    typedef typename GenericAdaptiveIntegrator<Y>::Function Function;
 
-    GenericHeunIntegrator(Function f)
-      : GenericSimpleIntegrator<Y>(f, s_a, s_b) { }
-    ~GenericHeunIntegrator() { }
+    GenericHE12Integrator(Function f)
+      : GenericAdaptiveIntegrator<Y>(f, 2, s_a, s_b, s_bStar) { }
+    ~GenericHE12Integrator() { }
 
   private:
-    typedef typename GenericSimpleIntegrator<Y>::ACoefficients ACoefficients;
-    typedef typename GenericSimpleIntegrator<Y>::BCoefficients BCoefficients;
+    typedef typename GenericAdaptiveIntegrator<Y>::ACoefficients ACoefficients;
+    typedef typename GenericAdaptiveIntegrator<Y>::BCoefficients BCoefficients;
 
     static ACoefficients s_a;
     static BCoefficients s_b;
+    static BCoefficients s_bStar;
 
     static Scalar s_a2Arr[1];
     static std::vector<Scalar> s_aArr[1];
     static Scalar s_bArr[2];
+    static Scalar s_bStarArr[2];
   };
 
   // Type alias
-  typedef GenericHeunIntegrator<double> HeunIntegrator;
+  typedef GenericHE12Integrator<double> HE12Integrator;
 
   // Implementation
 
   template <typename Y>
-  typename GenericHeunIntegrator<Y>::Scalar
-  GenericHeunIntegrator<Y>::s_a2Arr[1] = {
+  typename GenericHE12Integrator<Y>::Scalar
+  GenericHE12Integrator<Y>::s_a2Arr[1] = {
     Scalar(1)
   };
 
   template <typename Y>
-  std::vector<typename GenericHeunIntegrator<Y>::Scalar>
-  GenericHeunIntegrator<Y>::s_aArr[1] = {
+  std::vector<typename GenericHE12Integrator<Y>::Scalar>
+  GenericHE12Integrator<Y>::s_aArr[1] = {
     std::vector<Scalar>(s_a2Arr, s_a2Arr + 1)
   };
 
   template <typename Y>
-  typename GenericHeunIntegrator<Y>::ACoefficients
-  GenericHeunIntegrator<Y>::s_a(s_aArr, s_aArr + 1);
+  typename GenericHE12Integrator<Y>::ACoefficients
+  GenericHE12Integrator<Y>::s_a(s_aArr, s_aArr + 1);
 
   template <typename Y>
-  typename GenericHeunIntegrator<Y>::Scalar
-  GenericHeunIntegrator<Y>::s_bArr[2] = {
+  typename GenericHE12Integrator<Y>::Scalar
+  GenericHE12Integrator<Y>::s_bArr[2] = {
     Scalar(1)/Scalar(2), Scalar(1)/Scalar(2)
   };
 
   template <typename Y>
-  typename GenericHeunIntegrator<Y>::BCoefficients
-  GenericHeunIntegrator<Y>::s_b(s_bArr, s_bArr + 2);
+  typename GenericHE12Integrator<Y>::BCoefficients
+  GenericHE12Integrator<Y>::s_b(s_bArr, s_bArr + 2);
+
+  template <typename Y>
+  typename GenericHE12Integrator<Y>::Scalar
+  GenericHE12Integrator<Y>::s_bStarArr[2] = {
+    Scalar(1), Scalar(0)
+  };
+
+  template <typename Y>
+  typename GenericHE12Integrator<Y>::BCoefficients
+  GenericHE12Integrator<Y>::s_bStar(s_bStarArr, s_bStarArr + 2);
 }
 
-#endif // VZ_HEUN_HPP
+#endif // VZ_HE12_HPP

@@ -29,10 +29,10 @@ namespace vZ
   // Two function evaluations per step
   // Its tableau is:
   //
-  //   0  |
-  //   1/2|1/2
-  //   ---+-----
-  //      |0   1
+  //   0   |
+  //   1/2 | 1/2
+  //   ----+------
+  //       | 0   1
   //
   //    k1    = dt*f(y[n])
   //    k2    = dt*f(y[n] + (dt/2)*k1)

@@ -29,9 +29,9 @@ namespace vZ
   // First order
   // Its tableau is:
   //
-  //   0|
-  //   -+-
-  //    |1
+  //   0 |
+  //   --+--
+  //     | 1
   //
   // y[n + 1] = y[n] + dt*f(y[n])
   template <typename Y>
