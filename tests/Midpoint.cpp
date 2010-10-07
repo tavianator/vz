@@ -15,7 +15,7 @@ int
 main()
 {
   vZ::MidpointIntegrator integrator(f);
-  integrator.y(1.0).x(0.0).h(0.01);
+  integrator.y(1.0).x(0.0).h(0.02);
 
   integrator.integrate(2.0);
 
@@ -27,7 +27,7 @@ main()
             << "Expected:  " << expected  << std::endl;
 
   double error = std::fabs(expected - actual)/expected;
-  if (error > 3.4e-5) {
+  if (error > 1.4e-4) {
     std::cerr << "Error:     " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {

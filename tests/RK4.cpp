@@ -15,7 +15,7 @@ int
 main()
 {
   vZ::RK4Integrator integrator(f);
-  integrator.y(1.0).x(0.0).h(0.01);
+  integrator.y(1.0).x(0.0).h(0.04);
 
   integrator.integrate(2.0);
 
@@ -27,7 +27,7 @@ main()
             << "Expected:  " << expected  << std::endl;
 
   double error = std::fabs(expected - actual)/expected;
-  if (error > 1.7e-10) {
+  if (error > 4.2e-8) {
     std::cerr << "Error:     " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {
