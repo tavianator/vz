@@ -33,6 +33,8 @@ namespace vZ
     typedef typename GenericRKIntegrator<Y>::Scalar   Scalar;
     typedef typename GenericRKIntegrator<Y>::Function Function;
 
+    GenericAdaptiveIntegrator& tol(Scalar tol)
+      { m_atol = tol; m_rtol = tol; return *this; }
     GenericAdaptiveIntegrator& atol(Scalar tol) { m_atol = tol; return *this; }
     GenericAdaptiveIntegrator& rtol(Scalar tol) { m_rtol = tol; return *this; }
 

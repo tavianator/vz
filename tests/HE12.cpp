@@ -14,9 +14,8 @@ f(double t, double y)
 int
 main()
 {
-  double tol = 1e-6;
   vZ::HE12Integrator integrator(f);
-  integrator.atol(tol).rtol(tol).y(1.0).x(0.0).h(0.02);
+  integrator.tol(1e-6).y(1.0).x(0.0).h(0.02);
 
   integrator.integrate(2.0);
 
