@@ -41,6 +41,8 @@ namespace vZ
     Scalar atol() const { return m_atol; }
     Scalar rtol() const { return m_rtol; }
 
+    unsigned int rejections() const { return m_rejections; }
+
   protected:
     typedef typename GenericRKIntegrator<Y>::ACoefficients ACoefficients;
     typedef typename GenericRKIntegrator<Y>::BCoefficients BCoefficients;
@@ -49,7 +51,7 @@ namespace vZ
     GenericAdaptiveIntegrator(Function f, unsigned int order,
                               ACoefficients a, BCoefficients b,
                               BCoefficients bStar)
-      : GenericRKIntegrator<Y>(f), m_order(order),
+      : GenericRKIntegrator<Y>(f), m_order(order), m_rejections(0),
         m_a(a), m_b(b), m_bStar(bStar)
     { }
     virtual ~GenericAdaptiveIntegrator() { }
@@ -59,6 +61,7 @@ namespace vZ
   private:
     Scalar m_atol, m_rtol;
     unsigned int m_order;
+    unsigned int m_rejections;
     ACoefficients m_a;
     BCoefficients m_b, m_bStar;
   };
@@ -94,6 +97,7 @@ namespace vZ
       if (delta > scale) {
         // Reject the step
         this->h(newH);
+        ++m_rejections;
       } else {
         rejected = false;
       }

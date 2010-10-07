@@ -14,8 +14,8 @@ f(double t, double y)
 int
 main()
 {
-  vZ::HE12Integrator integrator(f);
-  integrator.tol(1e-6).y(1.0).x(0.0).h(0.02);
+  vZ::BS23Integrator integrator(f);
+  integrator.tol(1e-6).y(1.0).x(0.0).h(0.03);
 
   integrator.integrate(2.0);
 
@@ -29,7 +29,7 @@ main()
             << "rejections: " << integrator.rejections() << std::endl;
 
   double error = std::fabs(expected - actual)/expected;
-  if (error > 8.7e-7) {
+  if (error > 4.8e-6) {
     std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {

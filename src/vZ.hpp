@@ -33,5 +33,6 @@
 #include <vZ/RK4.hpp>
 #include <vZ/Adaptive.hpp>
 #include <vZ/HE12.hpp>
+#include <vZ/BS23.hpp>
 
 #endif // VZ_HPP

@@ -23,7 +23,8 @@ check_PROGRAMS = Euler-test                                                    \
                  Midpoint-test                                                 \
                  Heun-test                                                     \
                  RK4-test                                                      \
-                 HE12-test
+                 HE12-test                                                     \
+                 BS23-test
 TESTS          = $(check_PROGRAMS)
 
 Euler_test_SOURCES    = Euler.cpp
@@ -31,3 +32,4 @@ Midpoint_test_SOURCES = Midpoint.cpp
 Heun_test_SOURCES     = Heun.cpp
 RK4_test_SOURCES      = RK4.cpp
 HE12_test_SOURCES     = HE12.cpp
+BS23_test_SOURCES     = BS23.cpp
