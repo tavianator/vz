@@ -76,30 +76,34 @@ namespace vZ
   GenericAdaptiveIntegrator<Y>::step()
   {
     static const Scalar S = Scalar(19)/Scalar(20); // Arbitrary saftey factor
-    Scalar newH;
+    Scalar newH = this->h();
     Y y;
 
     // Attempt the integration step in a loop
-    bool rejected = true;
-    while (rejected) {
+    while (true) {
       KVector k = calculateK(m_a);
       y         = calculateY(k, m_b);
       Y yStar   = calculateY(k, m_bStar);
 
       // Get an error estimate
+
       using std::abs;
       using std::pow;
       Scalar delta = abs(y - yStar);
-      Scalar scale = m_atol + std::max(abs(y), abs(this->y()))*m_rtol;
 
-      newH = S*this->h()*pow(scale/delta, Scalar(1)/m_order);
+      if (delta == Scalar(0)) {
+        break;
+      }
+
+      Scalar scale = m_atol + std::max(abs(y), abs(this->y()))*m_rtol;
+      newH         = S*this->h()*pow(scale/delta, Scalar(1)/m_order);
 
       if (delta > scale) {
         // Reject the step
         this->h(newH);
         ++m_rejections;
       } else {
-        rejected = false;
+        break;
       }
     }
 
