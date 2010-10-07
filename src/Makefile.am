@@ -19,6 +19,7 @@
 
 nobase_include_HEADERS = vZ.hpp                                                \
                          vZ/Euler.hpp                                          \
+                         vZ/Heun.hpp                                           \
                          vZ/Integrator.hpp                                     \
                          vZ/Midpoint.hpp                                       \
                          vZ/RK.hpp                                             \

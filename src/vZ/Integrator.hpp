@@ -82,5 +82,4 @@ namespace vZ
   }
 }
 
-
 #endif // VZ_INTEGRATOR_HPP
