@@ -20,6 +20,8 @@
 nobase_include_HEADERS = vZ.hpp                                                \
                          vZ/Adaptive.hpp                                       \
                          vZ/BS23.hpp                                           \
+                         vZ/CK45.hpp                                           \
+                         vZ/DP45.hpp                                           \
                          vZ/Euler.hpp                                          \
                          vZ/HE12.hpp                                           \
                          vZ/Heun.hpp                                           \
@@ -27,5 +29,6 @@ nobase_include_HEADERS = vZ.hpp                                                \
                          vZ/Midpoint.hpp                                       \
                          vZ/RK.hpp                                             \
                          vZ/RK4.hpp                                            \
+                         vZ/RKF45.hpp                                          \
                          vZ/Simple.hpp                                         \
                          vZ/Traits.hpp
