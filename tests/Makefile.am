@@ -28,6 +28,7 @@ check_PROGRAMS = Euler-test                                                    \
                  RKF45-test                                                    \
                  CK45-test                                                     \
                  DP45-test                                                     \
+                 Vector-test                                                   \
                  EquationSystem-test
 TESTS          = $(check_PROGRAMS)
 
@@ -40,4 +41,5 @@ BS23_test_SOURCES           = BS23.cpp
 RKF45_test_SOURCES          = RKF45.cpp
 CK45_test_SOURCES           = CK45.cpp
 DP45_test_SOURCES           = DP45.cpp
+Vector_test_SOURCES         = Vector.cpp
 EquationSystem_test_SOURCES = EquationSystem.cpp

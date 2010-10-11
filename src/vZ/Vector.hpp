@@ -18,8 +18,8 @@
  * <http://www.gnu.org/licenses/>.                                       *
  *************************************************************************/
 
-#ifndef VZ_EQUATIONSYSTEM_HPP
-#define VZ_EQUATIONSYSTEM_HPP
+#ifndef VZ_VECTOR_HPP
+#define VZ_VECTOR_HPP
 
 #include <algorithm>
 #include <cmath>
@@ -27,35 +27,48 @@
 
 namespace vZ
 {
-  // A class to easily represent a system of ODEs
+  // An N-dimensional vector
   template <std::size_t N, typename T = double>
-  class EquationSystem
+  class Vector
   {
   public:
     typedef typename Traits<T>::Scalar Scalar;
 
-    // EquationSystem();
-    // ~EquationSystem();
+    Vector()              { }
+    explicit Vector(T x)  { m_values[0] = x; }
+    Vector(T x, T y)      { m_values[0] = x; m_values[1] = y; }
+    Vector(T x, T y, T z) { m_values[0] = x; m_values[1] = y; m_values[2] = z; }
+    // Vector(const Vector& v);
+    // ~Vector();
+
+    // Vector& operator=(const Vector& v);
+
+    // Component access
 
     T&       operator[](std::size_t i)       { return m_values[i]; }
     const T& operator[](std::size_t i) const { return m_values[i]; }
 
-    EquationSystem& operator+=(const EquationSystem& rhs);
-    EquationSystem& operator-=(const EquationSystem& rhs);
-    EquationSystem& operator*=(Scalar rhs);
-    EquationSystem& operator/=(Scalar rhs);
+    T x() const { return m_values[0]; }
+    T y() const { return m_values[1]; }
+    T z() const { return m_values[2]; }
+
+    // Operators
+    inline Vector& operator+=(const Vector& rhs);
+    inline Vector& operator-=(const Vector& rhs);
+    inline Vector& operator*=(Scalar rhs);
+    inline Vector& operator/=(Scalar rhs);
 
   private:
     T m_values[N];
   };
 
-  // Disallow 0-sized EquationSystems
+  // Disallow 0-sized Vectors
   template <typename T>
-  class EquationSystem<0, T>;
+  class Vector<0, T>;
 
   // Traits specialization
   template <std::size_t N, typename T>
-  class Traits<EquationSystem<N, T> >
+  class Traits<Vector<N, T> >
   {
   public:
     typedef typename Traits<T>::Scalar Scalar;
@@ -67,17 +80,17 @@ namespace vZ
   // Unary operators
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator+(const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>
+  operator+(const Vector<N, T>& rhs)
   {
     return rhs;
   }
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator-(const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>
+  operator-(const Vector<N, T>& rhs)
   {
-    EquationSystem<N, T> res;
+    Vector<N, T> res;
     for (std::size_t i = 0; i < N; ++i) {
       res[i] = -rhs[i];
     }
@@ -85,72 +98,95 @@ namespace vZ
   }
 
   template <std::size_t N, typename T>
-  typename EquationSystem<N, T>::Scalar
-  abs(const EquationSystem<N, T>& es)
+  inline typename Vector<N, T>::Scalar
+  norm(const Vector<N, T>& v)
   {
-    typename EquationSystem<N, T>::Scalar ret(0);
-    for (std::size_t i = 0; i < N; ++i) {
-      using std::abs;
-      ret = std::max(ret, abs(es[i]));
-    }
-    return ret;
+    using std::sqrt;
+    return sqrt(dot(v, v));
+  }
+
+  template <std::size_t N, typename T>
+  inline typename Vector<N, T>::Scalar
+  abs(const Vector<N, T>& v)
+  {
+    return norm(v);
   }
 
   // Binary operators
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator+(const EquationSystem<N, T>& lhs, const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>
+  operator+(const Vector<N, T>& lhs, const Vector<N, T>& rhs)
   {
-    EquationSystem<N, T> res = lhs;
+    Vector<N, T> res = lhs;
     res += rhs;
     return res;
   }
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator-(const EquationSystem<N, T>& lhs, const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>
+  operator-(const Vector<N, T>& lhs, const Vector<N, T>& rhs)
   {
-    EquationSystem<N, T> res = lhs;
+    Vector<N, T> res = lhs;
     res -= rhs;
     return res;
   }
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator*(typename EquationSystem<N, T>::Scalar lhs,
-            const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>
+  operator*(typename Vector<N, T>::Scalar lhs,
+            const Vector<N, T>& rhs)
   {
-    EquationSystem<N, T> res = rhs;
+    Vector<N, T> res = rhs;
     res *= lhs;
     return res;
   }
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator*(const EquationSystem<N, T>& lhs,
-            typename EquationSystem<N, T>::Scalar rhs)
+  inline Vector<N, T>
+  operator*(const Vector<N, T>& lhs,
+            typename Vector<N, T>::Scalar rhs)
   {
-    EquationSystem<N, T> res = lhs;
+    Vector<N, T> res = lhs;
     res *= rhs;
     return res;
   }
 
   template <std::size_t N, typename T>
-  inline EquationSystem<N, T>
-  operator/(const EquationSystem<N, T>& lhs,
-            typename EquationSystem<N, T>::Scalar rhs)
+  inline Vector<N, T>
+  operator/(const Vector<N, T>& lhs,
+            typename Vector<N, T>::Scalar rhs)
   {
-    EquationSystem<N, T> res = lhs;
+    Vector<N, T> res = lhs;
     res /= rhs;
     return res;
+  }
+
+  template <std::size_t N, typename T>
+  inline typename Vector<N, T>::Scalar
+  dot(const Vector<N, T>& lhs, const Vector<N, T>& rhs)
+  {
+    typename Vector<N, T>::Scalar res(0);
+    for (std::size_t i = 0; i < N; ++i) {
+      res += lhs[i]*rhs[i];
+    }
+    return res;
+  }
+
+  template <typename T>
+  inline Vector<3, T>
+  cross(const Vector<3, T>& lhs, const Vector<3, T>& rhs)
+  {
+    return Vector<3, T>(lhs.y()*rhs.z() - lhs.z()*rhs.y(),
+                        lhs.z()*rhs.x() - lhs.x()*rhs.z(),
+                        lhs.x()*rhs.y() - lhs.y()*rhs.x());
   }
 
   // Implementation
 
   template <std::size_t N, typename T>
-  EquationSystem<N, T>&
-  EquationSystem<N, T>::operator+=(const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>&
+  Vector<N, T>::operator+=(const Vector<N, T>& rhs)
   {
     for (std::size_t i = 0; i < N; ++i) {
       m_values[i] += rhs.m_values[i];
@@ -159,8 +195,8 @@ namespace vZ
   }
 
   template <std::size_t N, typename T>
-  EquationSystem<N, T>&
-  EquationSystem<N, T>::operator-=(const EquationSystem<N, T>& rhs)
+  inline Vector<N, T>&
+  Vector<N, T>::operator-=(const Vector<N, T>& rhs)
   {
     for (std::size_t i = 0; i < N; ++i) {
       m_values[i] -= rhs.m_values[i];
@@ -169,8 +205,8 @@ namespace vZ
   }
 
   template <std::size_t N, typename T>
-  EquationSystem<N, T>&
-  EquationSystem<N, T>::operator*=(typename EquationSystem<N, T>::Scalar rhs)
+  inline Vector<N, T>&
+  Vector<N, T>::operator*=(typename Vector<N, T>::Scalar rhs)
   {
     for (std::size_t i = 0; i < N; ++i) {
       m_values[i] *= rhs;
@@ -179,8 +215,8 @@ namespace vZ
   }
 
   template <std::size_t N, typename T>
-  EquationSystem<N, T>&
-  EquationSystem<N, T>::operator/=(typename EquationSystem<N, T>::Scalar rhs)
+  inline Vector<N, T>&
+  Vector<N, T>::operator/=(typename Vector<N, T>::Scalar rhs)
   {
     for (std::size_t i = 0; i < N; ++i) {
       m_values[i] /= rhs;
@@ -189,4 +225,4 @@ namespace vZ
   }
 }
 
-#endif // VZ_EQUATIONSYSTEM_HPP
+#endif // VZ_VECTOR_HPP

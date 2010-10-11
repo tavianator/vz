@@ -24,6 +24,7 @@
 #define VZ_HPP
 
 #include <vZ/Traits.hpp>
+#include <vZ/Vector.hpp>
 #include <vZ/EquationSystem.hpp>
 #include <vZ/Integrator.hpp>
 #include <vZ/RK.hpp>
