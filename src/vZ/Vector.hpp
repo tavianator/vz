@@ -24,6 +24,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <ostream>
 
 namespace vZ
 {
@@ -180,6 +181,19 @@ namespace vZ
     return Vector<3, T>(lhs.y()*rhs.z() - lhs.z()*rhs.y(),
                         lhs.z()*rhs.x() - lhs.x()*rhs.z(),
                         lhs.x()*rhs.y() - lhs.y()*rhs.x());
+  }
+
+  // Stream output
+
+  template <std::size_t N, typename T>
+  std::ostream&
+  operator<<(std::ostream& ostr, const Vector<N, T>& v)
+  {
+    ostr << "(" << v[0];
+    for (std::size_t i = 1; i < N; ++i) {
+      ostr << ", " << v[i];
+    }
+    return ostr << ")";
   }
 
   // Implementation
