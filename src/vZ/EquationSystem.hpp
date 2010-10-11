@@ -37,8 +37,8 @@ namespace vZ
     // EquationSystem();
     // ~EquationSystem();
 
-    T&       operator[](std::size_t i)       { return m_values[0]; }
-    const T& operator[](std::size_t i) const { return m_values[0]; }
+    T&       operator[](std::size_t i)       { return m_values[i]; }
+    const T& operator[](std::size_t i) const { return m_values[i]; }
 
     EquationSystem& operator+=(const EquationSystem& rhs);
     EquationSystem& operator-=(const EquationSystem& rhs);
@@ -48,6 +48,10 @@ namespace vZ
   private:
     T m_values[N];
   };
+
+  // Disallow 0-sized EquationSystems
+  template <typename T>
+  class EquationSystem<0, T>;
 
   // Traits specialization
   template <std::size_t N, typename T>
