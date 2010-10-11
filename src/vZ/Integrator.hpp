@@ -39,9 +39,9 @@ namespace vZ
     typedef typename Traits<Y>::Scalar Scalar;
     typedef std::tr1::function<Y (Scalar, Y)> Function;
 
-    // By default, y and t start at zero, h starts UNDEFINED
+    // By default, y, t, and h start UNDEFINED
     GenericIntegrator(Function f)
-      : m_f(f), m_y(0), m_x(0), m_iterations(0) { }
+      : m_f(f),m_iterations(0) { }
     virtual ~GenericIntegrator() { }
 
     GenericIntegrator& y(Y y)      { m_y = y; return *this; }

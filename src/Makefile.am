@@ -23,6 +23,7 @@ nobase_include_HEADERS = vZ.hpp                                                \
                          vZ/CK45.hpp                                           \
                          vZ/DP45.hpp                                           \
                          vZ/Euler.hpp                                          \
+                         vZ/EquationSystem.hpp                                 \
                          vZ/HE12.hpp                                           \
                          vZ/Heun.hpp                                           \
                          vZ/Integrator.hpp                                     \
