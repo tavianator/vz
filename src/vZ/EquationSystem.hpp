@@ -21,6 +21,8 @@
 #ifndef VZ_EQUATIONSYSTEM_HPP
 #define VZ_EQUATIONSYSTEM_HPP
 
+#include <algorithm>
+#include <cmath>
 #include <cstddef>
 
 namespace vZ
@@ -148,6 +150,18 @@ namespace vZ
       m_values[i] /= rhs;
     }
     return *this;
+  }
+
+  template <std::size_t N, typename T>
+  typename EquationSystem<N, T>::Scalar
+  abs(const EquationSystem<N, T>& es)
+  {
+    typename EquationSystem<N, T>::Scalar ret(0);
+    for (std::size_t i = 0; i < N; ++i) {
+      using std::abs;
+      ret = std::max(ret, abs(es[i]));
+    }
+    return ret;
   }
 }
 
