@@ -46,6 +46,8 @@ namespace vZ
 
     // Perform the stages of an RK integration
     KVector calculateK(const ACoefficients& a) const;
+    KVector calculateK(Y& y, const ACoefficients& a) const;
+    KVector calculateK(Y k1, Y& y, const ACoefficients& a) const;
     Y calculateY(const KVector& k, const BCoefficients& b) const;
   };
 
@@ -58,11 +60,26 @@ namespace vZ
   typename GenericRKIntegrator<Y>::KVector
   GenericRKIntegrator<Y>::calculateK(const ACoefficients& a) const
   {
+    Y ytemp; // Ignored
+    return calculateK(ytemp, a);
+  }
+
+  template <typename Y>
+  typename GenericRKIntegrator<Y>::KVector
+  GenericRKIntegrator<Y>::calculateK(Y& y, const ACoefficients& a) const
+  {
+    return calculateK(this->f()(this->x(), this->y()), y, a);
+  }
+
+  template <typename Y>
+  typename GenericRKIntegrator<Y>::KVector
+  GenericRKIntegrator<Y>::calculateK(Y k1, Y& y, const ACoefficients& a) const
+  {
     KVector k;
     k.reserve(a.size() + 1);
 
     // k1
-    k.push_back(this->f()(this->x(), this->y()));
+    k.push_back(k1);
 
     // k2..n
     for (typename ACoefficients::const_iterator i = a.begin();
@@ -70,7 +87,7 @@ namespace vZ
          ++i)
     {
       Scalar c(0);
-      Y y = this->y();
+      y = this->y();
       for (typename std::vector<Scalar>::size_type j = 0; j < i->size(); ++j) {
         Scalar aij = i->at(j);
         c += aij;

@@ -50,10 +50,7 @@ namespace vZ
 
     GenericAdaptiveIntegrator(Function f, unsigned int order,
                               ACoefficients a, BCoefficients b,
-                              BCoefficients bStar)
-      : GenericRKIntegrator<Y>(f), m_order(order), m_rejections(0),
-        m_a(a), m_b(b), m_bStar(bStar)
-    { }
+                              BCoefficients bStar);
     virtual ~GenericAdaptiveIntegrator() { }
 
     void step();
@@ -64,6 +61,9 @@ namespace vZ
     unsigned int m_rejections;
     ACoefficients m_a;
     BCoefficients m_b, m_bStar;
+
+    bool m_fsal, m_k1Set;
+    Y m_k1;
   };
 
   // Type alias
@@ -72,18 +72,45 @@ namespace vZ
   // Implementations
 
   template <typename Y>
+  GenericAdaptiveIntegrator<Y>::GenericAdaptiveIntegrator(
+    Function f, unsigned int order,
+    ACoefficients a, BCoefficients b, BCoefficients bStar
+  )
+    : GenericRKIntegrator<Y>(f), m_order(order), m_rejections(0),
+      m_a(a), m_b(b), m_bStar(bStar), m_fsal(true), m_k1Set(false)
+  {
+    std::size_t i;
+    for (i = 0; i < m_a.back().size(); ++i) {
+      if (m_a.back()[i] != m_b.at(i)) {
+        m_fsal = false;
+        return;
+      }
+    }
+
+    if (m_b.at(i) != Scalar(0))
+      m_fsal = false;
+  }
+
+  template <typename Y>
   void
   GenericAdaptiveIntegrator<Y>::step()
   {
     static const Scalar S = Scalar(19)/Scalar(20); // Arbitrary saftey factor
     Scalar newH = this->h();
     Y y;
+    KVector k;
 
     // Attempt the integration step in a loop
     while (true) {
-      KVector k = calculateK(m_a);
-      y         = calculateY(k, m_b);
-      Y yStar   = calculateY(k, m_bStar);
+      if (m_k1Set) {
+        k = calculateK(m_k1, y, m_a);
+      } else if (m_fsal) {
+        k = calculateK(y, m_a);
+      } else {
+        k = calculateK(m_a);
+        y = calculateY(k, m_b);
+      }
+      Y yStar = calculateY(k, m_bStar);
 
       // Get an error estimate
 
@@ -110,6 +137,12 @@ namespace vZ
     // Update x and y
     this->y(y);
     this->x(this->x() + this->h());
+
+    // Handle FSAL optimization
+    if (m_fsal) {
+      m_k1Set = true;
+      m_k1    = k.back();
+    }
 
     // Adjust the stepsize for the next iteration
     this->h(newH);
