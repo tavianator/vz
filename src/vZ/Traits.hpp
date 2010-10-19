@@ -21,6 +21,8 @@
 #ifndef VZ_TRAITS_HPP
 #define VZ_TRAITS_HPP
 
+#include <complex>
+
 namespace vZ
 {
   // Traits class
@@ -32,6 +34,17 @@ namespace vZ
   {
   public:
     typedef T Scalar;
+
+  private:
+    Traits();
+  };
+
+  // Specialization for std::complex<T>
+  template <typename T>
+  class Traits<std::complex<T> >
+  {
+  public:
+    typedef typename Traits<T>::Scalar Scalar;
 
   private:
     Traits();

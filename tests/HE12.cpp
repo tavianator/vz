@@ -51,7 +51,7 @@ main()
             << "Iterations: " << integrator.iterations() << std::endl
             << "Rejections: " << integrator.rejections() << std::endl;
 
-  double error = std::fabs(expected - actual)/expected;
+  double error = std::abs(expected - actual)/expected;
   if (error > 8.7e-7) {
     std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;

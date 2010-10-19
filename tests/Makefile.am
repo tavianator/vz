@@ -30,7 +30,8 @@ check_PROGRAMS = Euler-test                                                    \
                  DP45-test                                                     \
                  Vector-test                                                   \
                  EquationSystem-test                                           \
-                 EquationSystem-Vector-test
+                 EquationSystem-Vector-test                                    \
+                 Complex-test
 TESTS          = $(check_PROGRAMS)
 
 Euler_test_SOURCES                 = Euler.cpp
@@ -45,3 +46,4 @@ DP45_test_SOURCES                  = DP45.cpp
 Vector_test_SOURCES                = Vector.cpp
 EquationSystem_test_SOURCES        = EquationSystem.cpp
 EquationSystem_Vector_test_SOURCES = EquationSystem-Vector.cpp
+Complex_test_SOURCES               = Complex.cpp
