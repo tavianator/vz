@@ -25,7 +25,11 @@
 
 typedef vZ::EquationSystem<2> Y;
 
-// y'' = y (y == C*exp(t))
+// y'' = y (y == C*exp(t) + D*exp(-t))
+//
+// Split as:
+//   y' = v
+//   v' = y
 Y
 f(double t, Y y)
 {
@@ -40,7 +44,7 @@ main()
 {
   Y y;
   y[0] = 1.0;
-  y[1] = 1.0;
+  y[1] = 0.0;
   vZ::GenericDP45Integrator<Y> integrator(f);
   integrator.tol(1e-6)
             .y(y)
@@ -50,7 +54,7 @@ main()
   integrator.integrate(2.0);
 
   double actual   = integrator.y()[0];
-  double expected = std::exp(2.0);
+  double expected = std::cosh(2.0);
 
   std::cout << std::setprecision(10)
             << "Numerical:  " << actual << std::endl
