@@ -24,9 +24,9 @@
 #include <iostream>
 #include <iomanip>
 
-// y' = -y (y == C*exp(t))
+// y' = -y (y == C*exp(x))
 std::complex<double>
-f(double t, std::complex<double> y)
+f(double x, std::complex<double> y)
 {
   return y;
 }

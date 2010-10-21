@@ -23,9 +23,9 @@
 #include <iostream>
 #include <iomanip>
 
-// y' = -y (y == C*exp(-t))
+// y' = -y (y == C*exp(-x))
 vZ::Vector<3>
-f(double t, vZ::Vector<3> y)
+f(double x, vZ::Vector<3> y)
 {
   return -y;
 }

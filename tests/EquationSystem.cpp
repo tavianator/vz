@@ -25,13 +25,13 @@
 
 typedef vZ::EquationSystem<2> Y;
 
-// y'' = y (y == C*exp(t) + D*exp(-t))
+// y'' = y (y == C*exp(x) + D*exp(-x))
 //
 // Split as:
 //   y' = v
 //   v' = y
 Y
-f(double t, Y y)
+f(double x, Y y)
 {
   Y r;
   r[0] = y[1];

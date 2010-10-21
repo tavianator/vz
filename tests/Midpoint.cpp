@@ -23,9 +23,9 @@
 #include <iostream>
 #include <iomanip>
 
-// y' = y (y == C*exp(t))
+// y' = y (y == C*exp(x))
 double
-f(double t, double y)
+f(double x, double y)
 {
   return y;
 }
