@@ -82,6 +82,7 @@ namespace vZ
     k.push_back(k1);
 
     // k2..n
+    Scalar h(this->h());
     for (typename ACoefficients::const_iterator i = a.begin();
          i != a.end();
          ++i)
@@ -92,10 +93,10 @@ namespace vZ
         Scalar aij = i->at(j);
         c += aij;
 
-        y += aij*this->h()*k.at(j);
+        y += h*aij*k.at(j);
       }
 
-      k.push_back(this->f()(this->x() + c, y));
+      k.push_back(this->f()(this->x() + h*c, y));
     }
 
     return k;
@@ -106,10 +107,11 @@ namespace vZ
   GenericRKIntegrator<Y>::calculateY(const KVector& k, const BCoefficients& b)
     const
   {
-    Y y = this->y();
+    Y y(this->y());
+    Scalar h(this->h());
 
     for (typename std::vector<Scalar>::size_type i = 0; i < k.size(); ++i) {
-      y += this->h()*b.at(i)*k.at(i);
+      y += h*b.at(i)*k.at(i);
     }
 
     return y;
