@@ -60,7 +60,7 @@ main()
             << "Rejections: " << integrator.rejections() << std::endl;
 
   double error = norm(expected - actual)/norm(expected);
-  if (error > 4.0e-6) {
+  if (error > 4.0e-6 || !std::isfinite(error)) {
     std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {

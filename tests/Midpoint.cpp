@@ -48,8 +48,8 @@ main()
             << "Expected:   " << expected  << std::endl
             << "Iterations: " << integrator.iterations() << std::endl;
 
-  double error = std::abs(expected - actual)/expected;
-  if (error > 1.4e-4) {
+  double error = std::abs(expected - actual)/std::abs(expected);
+  if (error > 1.4e-4 || !std::isfinite(error)) {
     std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {
