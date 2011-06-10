@@ -23,11 +23,11 @@
 #include <iostream>
 #include <iomanip>
 
-// y' = y (y == C*exp(x))
+// y' = x*y (y == C*exp(x^2/2))
 double
 f(double x, double y)
 {
-  return y;
+  return x*y;
 }
 
 int

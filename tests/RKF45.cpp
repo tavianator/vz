@@ -23,11 +23,11 @@
 #include <iostream>
 #include <iomanip>
 
-// y' = y (y == C*exp(x))
+// y' = x*y (y == C*exp(x^2/2))
 double
 f(double x, double y)
 {
-  return y;
+  return x*y;
 }
 
 int
@@ -52,7 +52,7 @@ main()
             << "Rejections: " << integrator.rejections() << std::endl;
 
   double error = std::abs(expected - actual)/std::abs(expected);
-  if (error > 1.7e-6 || !std::isfinite(error)) {
+  if (error > 1.1e-5 || !std::isfinite(error)) {
     std::cerr << "Error:      " << 100.0*error << "%" << std::endl;
     return EXIT_FAILURE;
   } else {
