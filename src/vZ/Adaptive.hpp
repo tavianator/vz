@@ -103,14 +103,14 @@ namespace vZ
     // Attempt the integration step in a loop
     while (true) {
       if (m_k1Set) {
-        k = calculateK(m_k1, y, m_a);
+        k = this->calculateK(m_k1, y, m_a);
       } else if (m_fsal) {
-        k = calculateK(y, m_a);
+        k = this->calculateK(y, m_a);
       } else {
-        k = calculateK(m_a);
-        y = calculateY(k, m_b);
+        k = this->calculateK(m_a);
+        y = this->calculateY(k, m_b);
       }
-      Y yStar = calculateY(k, m_bStar);
+      Y yStar = this->calculateY(k, m_bStar);
 
       // Get an error estimate
 

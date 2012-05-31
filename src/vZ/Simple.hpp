@@ -56,7 +56,7 @@ namespace vZ
   void
   GenericSimpleIntegrator<Y>::step()
   {
-    this->y(calculateY(calculateK(m_a), m_b));
+    this->y(this->calculateY(this->calculateK(m_a), m_b));
     this->x(this->x() + this->h());
   }
 }

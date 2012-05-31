@@ -10,6 +10,7 @@
 /ltmain.sh
 /m4
 /missing
+/test-driver
 /ylwrap
 Makefile
 Makefile.in
@@ -17,6 +18,7 @@ Makefile.in
 # Files created by `make check'
 /tests/*-test
 /tests/*.log
+/tests/*.trs
 
 # pkg-config files
 *.pc
