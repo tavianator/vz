@@ -1,4 +1,4 @@
-# Files and folders created by aclocal, autoconf, automake, and libtoolize
+# Files and folders created by ./autogen.sh, and ./configure
 /aclocal.m4
 /autom4te.cache/
 /compile
@@ -15,6 +15,9 @@
 Makefile
 Makefile.in
 
+# pkg-config files
+*.pc
+
 # Files created by `make check'
 /tests/*-test
 /tests/*.log
@@ -30,3 +33,7 @@ Makefile.in
 # Files and folders created by compilation
 .deps/
 *.[oa]
+
+# Core dumps
+core
+vgcore.*
